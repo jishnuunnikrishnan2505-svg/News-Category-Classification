@@ -104,7 +104,6 @@ def predict_news(text):
 
 st.title("📰 News Category Classifier")
 
-st.write("RNN + NLP based News Classification")
 
 user_input = st.text_area("Enter News Text")
 
@@ -120,6 +119,7 @@ if st.button("Predict Category"):
     else:
 
         st.warning("Please enter some text")
+
 
 
 
