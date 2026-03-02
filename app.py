@@ -1,3 +1,17 @@
+import os
+import gdown
+
+# Download model folder automatically
+
+if not os.path.exists("news_model.keras"):
+
+    gdown.download_folder(
+        "https://drive.google.com/drive/folders/1I3xzpMNVm1ryE64WO2FroW37Pb8d3p-c",
+        quiet=False,
+        use_cookies=False
+    )
+
+
 import streamlit as st
 import numpy as np
 import pickle
@@ -67,5 +81,6 @@ if st.button("Predict Category"):
         st.success("Category: " + result)
 
     else:
+
 
         st.warning("Please enter news text")
