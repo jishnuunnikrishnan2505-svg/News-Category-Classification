@@ -4,6 +4,7 @@ import pickle
 import re
 import os
 import gdown
+import shutil
 
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.sequence import pad_sequences
@@ -15,19 +16,28 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 FOLDER_URL = "https://drive.google.com/drive/folders/1I3xzpMNVm1ryE64WO2FroW37Pb8d3p-c"
 
-# Download only if not present
-if not os.path.exists("news_model.keras") or not os.path.exists("tokenizer.pkl"):
 
+# Download if not exists
+if not os.path.exists("news_model.keras"):
+
+    import streamlit as st
     st.write("Downloading model files... ⏳")
 
-    gdown.download_folder(
+    folder = gdown.download_folder(
         FOLDER_URL,
         quiet=False,
         use_cookies=False
     )
 
-    st.write("Download complete ✅")
+    # Move files to root folder
+    for root, dirs, files in os.walk("."):
+        for file in files:
+            if file == "news_model.keras" or file == "tokenizer.pkl":
+                src = os.path.join(root, file)
+                dst = file
+                shutil.move(src, dst)
 
+    st.write("Download complete ✅")
 
 # -------------------------------
 # Load Model
@@ -110,3 +120,4 @@ if st.button("Predict Category"):
     else:
 
         st.warning("Please enter some text")
+
