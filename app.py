@@ -18,7 +18,7 @@ FOLDER_URL = "https://drive.google.com/drive/folders/1I3xzpMNVm1ryE64WO2FroW37Pb
 
 
 # Download if not exists
-if not os.path.exists("news_model.h5"):
+if not os.path.exists("news_model.keras"):
 
     import streamlit as st
     st.write("Downloading model files... ⏳")
@@ -32,7 +32,7 @@ if not os.path.exists("news_model.h5"):
     # Move files to root folder
     for root, dirs, files in os.walk("."):
         for file in files:
-            if file == "news_model.h5" or file == "tokenizer.pkl":
+            if file == "news_model.keras" or file == "tokenizer.pkl":
                 src = os.path.join(root, file)
                 dst = file
                 shutil.move(src, dst)
@@ -43,7 +43,7 @@ if not os.path.exists("news_model.h5"):
 # Load Model
 # -------------------------------
 
-model = load_model("news_model.h5")
+model = load_model("news_model.keras")
 
 tokenizer = pickle.load(open("tokenizer.pkl","rb"))
 
@@ -120,5 +120,6 @@ if st.button("Predict Category"):
     else:
 
         st.warning("Please enter some text")
+
 
 
